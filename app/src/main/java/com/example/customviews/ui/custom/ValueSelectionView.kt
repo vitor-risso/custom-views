@@ -88,9 +88,12 @@ class ValueSelectionView : ConstraintLayout {
     }
 
     fun clearValue(){
-        cnt = 0
+        with(mPreferences.edit()){
+            putInt("CNT", 0)
+            apply()
+        }
+        cnt = mPreferences.getInt("CNT", 0)
         txtValue.text = cnt.toString()
         valueChangedListener(cnt, maxValue)
     }
-
 }
