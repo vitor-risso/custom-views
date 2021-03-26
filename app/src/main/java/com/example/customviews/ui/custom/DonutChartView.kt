@@ -1,10 +1,13 @@
 package com.example.customviews.ui.custom
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
+import android.util.Log
+import android.view.ContextMenu
 import android.view.View
 import com.example.customviews.R
 import kotlin.math.min
@@ -20,6 +23,9 @@ class DonutChartView : View {
 
     private var currentAngle = 0f
 
+    private lateinit var mPreferences: SharedPreferences
+
+
     val paint = Paint()
 
     constructor(context: Context?) : super(context){
@@ -28,10 +34,18 @@ class DonutChartView : View {
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs){
         init(attrs)
+
     }
+
+
 
     fun init(attrs: AttributeSet?) {
         val attrArray = context.obtainStyledAttributes(attrs, R.styleable.DonutChartView)
+
+
+        if (context != null) {
+            mPreferences = context.getSharedPreferences("ola",Context.MODE_PRIVATE)
+        }
 
         try {
             bgColor = attrArray.getColor(R.styleable.DonutChartView_bgColor, bgColor)
@@ -43,6 +57,7 @@ class DonutChartView : View {
 
     }
 
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
 
@@ -53,6 +68,7 @@ class DonutChartView : View {
     }
 
     override fun onDraw(canvas: Canvas?) {
+
         super.onDraw(canvas)
 
 //        canvas?.let{
@@ -69,6 +85,9 @@ class DonutChartView : View {
                 paint
             )
 
+
+
+            currentAngle = mPreferences.getFloat("CA", 0f)
             paint.color = arcColor
             drawArc(
                 0f,
@@ -76,10 +95,11 @@ class DonutChartView : View {
                 viewWidth.toFloat(),
                 viewHeight.toFloat(),
                 0f,
-                currentAngle.toFloat(),
+              currentAngle,
                 true,
                 paint
             )
+
 
             paint.color = holeColor
             drawCircle(
@@ -92,9 +112,13 @@ class DonutChartView : View {
     }
 
     fun updateAngels(angle: Float){
-        currentAngle = angle
+        with(mPreferences.edit()){
+            putFloat("CA",angle)
+            apply()
+        }
         invalidate()
 
     }
+
 
 }
