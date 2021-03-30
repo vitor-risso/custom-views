@@ -79,6 +79,7 @@ class ValueSelectionView : ConstraintLayout {
             maxValue = attrsArray.getInt(R.styleable.ValueSelectionView_maxValue, 100)
         } finally {
             attrsArray.recycle()
+
         }
 
     }

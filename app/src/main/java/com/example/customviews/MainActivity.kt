@@ -1,10 +1,12 @@
 package com.example.customviews
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.customviews.databinding.ActivityMainBinding
+import com.example.customviews.ui.custom.MaxValueActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         mPreferences = this.getPreferences(Context.MODE_PRIVATE)
 
         with(binding) {
@@ -26,11 +27,18 @@ class MainActivity : AppCompatActivity() {
                 donutChartView.updateAngels(result.toFloat())
             }
 
+            valueSelectionView.maxValue = intent.getIntExtra("MAX_VALUE", 10)
+
             resetBtn.setOnClickListener {
                 valueSelectionView.clearValue()
+            }
+
+            binding.setBtn.setOnClickListener {
+                startActivity(Intent(this@MainActivity, MaxValueActivity::class.java))
             }
 
         }
 
     }
+
 }
