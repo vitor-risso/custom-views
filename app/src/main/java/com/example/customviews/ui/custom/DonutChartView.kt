@@ -85,8 +85,6 @@ class DonutChartView : View {
                 paint
             )
 
-
-
             currentAngle = mPreferences.getFloat("CA", 0f)
             paint.color = arcColor
             drawArc(
@@ -99,7 +97,6 @@ class DonutChartView : View {
                 true,
                 paint
             )
-
 
             paint.color = holeColor
             drawCircle(
@@ -117,7 +114,6 @@ class DonutChartView : View {
             apply()
         }
         invalidate()
-
     }
 
 

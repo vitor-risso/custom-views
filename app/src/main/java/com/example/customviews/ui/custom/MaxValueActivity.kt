@@ -20,11 +20,17 @@ class MaxValueActivity : AppCompatActivity() {
         mPreferences = this.getPreferences(Context.MODE_PRIVATE)
 
         with(binding) {
+
             set.setOnClickListener {
                 with(mPreferences.edit()) {
                     putInt("MAX_VALUE", setText.text.toString().toInt())
                     apply()
                 }
+                val intent = Intent(this@MaxValueActivity, MainActivity::class.java)
+                intent.putExtra("MAX_VALUE", mPreferences.getInt("MAX_VALUE", 1))
+                intent.putExtra("NEED_TO_RESTART", true)
+
+                startActivity(intent)
             }
 
             returnToMain.setOnClickListener {

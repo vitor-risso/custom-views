@@ -39,8 +39,6 @@ class ValueSelectionView : ConstraintLayout {
 
         cnt = mPreferences.getInt("CNT", 0)
 
-        Log.d("Vitor", cnt.toString())
-
         btnLess.setOnClickListener {
             if (cnt > 0) {
                 txtValue.text = (--cnt).toString()
@@ -51,6 +49,7 @@ class ValueSelectionView : ConstraintLayout {
                 valueChangedListener(cnt, maxValue)
             }
         }
+
         txtValue.text = cnt.toString()
 
         btnPlus.setOnClickListener {
